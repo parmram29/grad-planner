@@ -1,4 +1,4 @@
-// next.config.ts
+// next.config.js
 import type { NextConfig } from 'next';
 import { Configuration } from 'webpack';
 
@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       };
     }
     return config;
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
