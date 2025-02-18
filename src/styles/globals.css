@@ -1,3 +1,4 @@
+/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +19,48 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* React Big Calendar Overrides */
+.rbc-calendar {
+  background: var(--background);
+  color: var(--foreground);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.rbc-event {
+  background: hsl(215, 100%, 65%) !important;
+  color: white !important;
+  margin-bottom: 2px !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+.rbc-month-view {
+  background: var(--background) !important;
+  border: 1px solid hsl(0, 0%, 80%) !important;
+}
+
+.rbc-day-slot .rbc-events-container {
+  margin-right: 1px !important;
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+  .rbc-calendar {
+    border-color: hsl(0, 0%, 20%) !important;
+  }
+  
+  .rbc-month-view {
+    border-color: hsl(0, 0%, 20%) !important;
+  }
+  
+  .rbc-header {
+    border-bottom: 1px solid hsl(0, 0%, 20%) !important;
+  }
+  
+  .rbc-day-bg + .rbc-day-bg {
+    border-left: 1px solid hsl(0, 0%, 20%) !important;
+  }
 }
