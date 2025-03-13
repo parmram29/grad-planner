@@ -8,7 +8,7 @@ import * as XLSX from "xlsx";
 const localizer = momentLocalizer(moment);
 
 /**
- * Derives the learner group based on provided fields.
+ * derives the learner group based on provided fields.
  */
 const deriveLearnerGroup = (learnerGroupField, sessionName, sectionName) => {
   let group = "";
@@ -35,7 +35,7 @@ const deriveLearnerGroup = (learnerGroupField, sessionName, sectionName) => {
 };
 
 /**
- * Fixes any known invalid date strings.
+ * Fix any known invalid date strings.
  */
 const fixInvalidDate = (dateInput) => {
   if (dateInput instanceof Date) {
@@ -51,7 +51,7 @@ const fixInvalidDate = (dateInput) => {
 };
 
 /**
- * Parses a time value into an object containing hours and minutes.
+ * parses a time value into an object with hours and minutes.
  */
 const parseTime = (timeValue) => {
   try {
@@ -92,7 +92,7 @@ const parseTime = (timeValue) => {
 };
 
 /**
- * Combines a date string and time value into a Date object.
+ * date string and time value into a Date object.
  */
 const parseDateTime = (dateString, timeValue) => {
   try {
@@ -102,7 +102,7 @@ const parseDateTime = (dateString, timeValue) => {
     }
     const fixedDateString = fixInvalidDate(dateString);
     
-    // Handle potential Excel date numbers
+    // handle potential Excel date numbers
     if (!isNaN(fixedDateString)) {
       const numDate = parseInt(fixedDateString, 10);
       if (numDate < 100000) {
@@ -159,9 +159,7 @@ const MyCalendar = () => {
   const [availableGroups, setAvailableGroups] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  /**
-   * Builds the list of available learner groups from events.
-   */
+
   useEffect(() => {
     const groupsSet = new Set(events.map((event) => event.learnerGroup));
     let groups = Array.from(groupsSet).filter((g) => g && g !== "");
@@ -195,7 +193,7 @@ const MyCalendar = () => {
   }, [events]);
 
   /**
-   * Handles file upload and delegates to Excel or CSV processing.
+   * handles file upload and delegates to excel or CSV processing.
    */
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -228,7 +226,7 @@ const MyCalendar = () => {
   };
 
   /**
-   * Processes an Excel file upload.
+   * processes an Excel file upload.
    */
   const processExcelFile = (file) => {
     const reader = new FileReader();
@@ -298,7 +296,7 @@ const MyCalendar = () => {
               console.warn(`Skipping row ${index + 1}: Invalid date/time`);
               return [];
             }
-            // Adjust end time if needed
+            // adjust end time if needed
             if (start >= end) {
               const adjustedEnd = moment(end).add(1, "days").toDate();
               if (start < adjustedEnd) {
@@ -341,7 +339,7 @@ const MyCalendar = () => {
   };
 
   /**
-   * Processes a CSV file upload.
+   * processes a CSV file upload.
    */
   const processCSVFile = (file) => {
     Papa.parse(file, {
