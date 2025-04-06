@@ -8,7 +8,7 @@ import * as XLSX from "xlsx";
 const localizer = momentLocalizer(moment);
 
 /**
- * derives the learner group based on provided fields.
+ * derives the learner group based on group
  */
 const deriveLearnerGroup = (learnerGroupField, sessionName, sectionName) => {
   let group = "";
@@ -34,9 +34,6 @@ const deriveLearnerGroup = (learnerGroupField, sessionName, sectionName) => {
   return group ? group.trim().toUpperCase() : "Ungrouped";
 };
 
-/**
- * Fix any known invalid date strings.
- */
 const fixInvalidDate = (dateInput) => {
   if (dateInput instanceof Date) {
     return moment(dateInput).format("YYYYMMDD");
@@ -50,9 +47,6 @@ const fixInvalidDate = (dateInput) => {
   return dateInput;
 };
 
-/**
- * parses a time value into an object with hours and minutes.
- */
 const parseTime = (timeValue) => {
   try {
     if (!timeValue) return null;
@@ -60,7 +54,6 @@ const parseTime = (timeValue) => {
       return { hours: timeValue.getHours(), minutes: timeValue.getMinutes() };
     }
     const cleaned = timeValue.toString().trim().toLowerCase();
-    // Military time format (e.g., 13:45)
     const militaryMatch = cleaned.match(/^(\d{1,2}):?(\d{2})$/);
     if (militaryMatch) {
       const hours = parseInt(militaryMatch[1], 10);
@@ -68,7 +61,7 @@ const parseTime = (timeValue) => {
       if (hours > 23 || minutes > 59) return null;
       return { hours, minutes };
     }
-    // 12-hour format (e.g., 1:30 pm, noon, midnight)
+
     const twelveHourMatch =
       cleaned.match(/(\d{1,2})(?::(\d{2}))?\s*([ap]m)/i) ||
       cleaned.match(/(noon|midnight)/i);
@@ -91,9 +84,7 @@ const parseTime = (timeValue) => {
   }
 };
 
-/**
- * date string and time value into a Date object.
- */
+
 const parseDateTime = (dateString, timeValue) => {
   try {
     if (!dateString || !timeValue) {
@@ -102,7 +93,6 @@ const parseDateTime = (dateString, timeValue) => {
     }
     const fixedDateString = fixInvalidDate(dateString);
     
-    // handle potential Excel date numbers
     if (!isNaN(fixedDateString)) {
       const numDate = parseInt(fixedDateString, 10);
       if (numDate < 100000) {
@@ -147,7 +137,7 @@ const parseDateTime = (dateString, timeValue) => {
 };
 
 /**
- * Main Calendar Component
+ * main calendar 
  */
 const MyCalendar = () => {
   const [events, setEvents] = useState([]);
@@ -164,7 +154,6 @@ const MyCalendar = () => {
     const groupsSet = new Set(events.map((event) => event.learnerGroup));
     let groups = Array.from(groupsSet).filter((g) => g && g !== "");
     
-    // Ensure "Ungrouped" is pushed to the end
     const ungroupedIndex = groups.indexOf("Ungrouped");
     if (ungroupedIndex > -1) {
       groups.splice(ungroupedIndex, 1);
@@ -193,7 +182,7 @@ const MyCalendar = () => {
   }, [events]);
 
   /**
-   * handles file upload and delegates to excel or CSV processing.
+   * handle file upload for processing
    */
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -225,9 +214,6 @@ const MyCalendar = () => {
     }
   };
 
-  /**
-   * processes an Excel file upload.
-   */
   const processExcelFile = (file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -258,7 +244,6 @@ const MyCalendar = () => {
             const courseName = getExcelField("Course Name");
             const sessionType = getExcelField("Session Type");
             const sessionName = getExcelField("Session Name");
-            // Use "Section Name" or fallback to "Section"
             const sectionName =
               getExcelField("Section Name") || getExcelField("Section");
             const sectionDateRaw = getExcelField("Section Date");
@@ -296,7 +281,6 @@ const MyCalendar = () => {
               console.warn(`Skipping row ${index + 1}: Invalid date/time`);
               return [];
             }
-            // adjust end time if needed
             if (start >= end) {
               const adjustedEnd = moment(end).add(1, "days").toDate();
               if (start < adjustedEnd) {
@@ -337,10 +321,7 @@ const MyCalendar = () => {
     };
     reader.readAsArrayBuffer(file);
   };
-
-  /**
-   * processes a CSV file upload.
-   */
+  
   const processCSVFile = (file) => {
     Papa.parse(file, {
       header: true,
@@ -433,10 +414,6 @@ const MyCalendar = () => {
     });
   };
 
-  // Optional: Filter events by selected group (currently using all events)
-  const filteredEvents = events;
-
-  // Color mapping for different learner groups
   const groupColors = {
     A1: "#f87171",
     A2: "#fb923c",
@@ -498,7 +475,7 @@ const MyCalendar = () => {
 
   return (
     <div className="p-4">
-      {/* File Upload Section */}
+   
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">
           Upload Schedule (Excel/CSV)
@@ -512,7 +489,6 @@ const MyCalendar = () => {
         />
       </div>
 
-      {/* Status Messages */}
       {isProcessing && (
         <div className="mt-4 p-4 bg-blue-50 text-blue-700 rounded">
           Processing file... (This may take a moment)
@@ -524,7 +500,6 @@ const MyCalendar = () => {
         </div>
       )}
 
-      {/* Group Filter */}
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Filter by Group:</label>
         <select
@@ -541,7 +516,6 @@ const MyCalendar = () => {
         </select>
       </div>
 
-      {/* View Toggle */}
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setView("calendar")}
@@ -561,7 +535,6 @@ const MyCalendar = () => {
         </button>
       </div>
 
-      {/* Calendar Display */}
       {view === "calendar" && (
         <div style={{ height: "70vh" }}>
           <Calendar
@@ -591,7 +564,6 @@ const MyCalendar = () => {
         </div>
       )}
 
-      {/* Debug Information (Visible in development only) */}
       {process.env.NODE_ENV === "development" && (
         <div className="mt-8 p-4 bg-gray-100 rounded">
           <h3 className="font-bold mb-4">Debug Information</h3>
@@ -613,7 +585,6 @@ const MyCalendar = () => {
         </div>
       )}
 
-      {/* Modal for Adding/Editing Events */}
       {(selectedSlot || selectedEvent) && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-96">
