@@ -182,6 +182,14 @@ const MyCalendar = () => {
   }, [events]);
 
   /**
+   * events shown in the calendar, narrowed by the group dropdown
+   */
+  const filteredEvents =
+    selectedGroup === "All Groups"
+      ? events
+      : events.filter((event) => event.learnerGroup === selectedGroup);
+
+  /**
    * handle file upload for processing
    */
   const handleFileUpload = async (event) => {
