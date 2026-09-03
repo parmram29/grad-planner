@@ -1,0 +1,14 @@
+Course Name,Session Type,Session Name,Section Name,Section Date,Start Time,End Time,Learner Group,Location
+Advanced Human Physiology,Lecture,Valid Control Row,Section A1,20260903,09:00,10:30,A1,Health Sciences Hall 201
+Clinical Anatomy,Lab,Alternate Date Format ISO,Section A2,2026-09-03,11:00,12:30,A2,Anatomy Lab 1
+Clinical Anatomy,Lab,Alternate Date Format US,Section B1,09/03/2026,13:00,14:30,B1,Anatomy Lab 1
+Pharmacotherapeutics,Lecture,Twelve Hour Clock Times,Section B2,20260903,2:45 pm,4:15 pm,B2,Health Sciences Hall 105
+Clinical Practicum,Clinical,Overnight Shift Crosses Midnight,Section C1,20260903,22:00,05:30,C1,University Hospital 5 East
+Clinical Skills,Simulation,Group Derived From Section Name,Simulation Group D2,20260903,16:00,17:00,,Simulation Center Room A
+Professional Development,Workshop,No Group Anywhere Falls To Ungrouped,All Cohorts,20260903,18:00,19:00,,Graduate Commons Auditorium
+Ethics in Health Care,Seminar,SKIPPED Missing Section Date,Section C2,,10:00,11:00,C2,Graduate Commons 118
+Ethics in Health Care,Seminar,SKIPPED Alphabetic Date,Section C2,Sep 03 2026,10:00,11:00,C2,Graduate Commons 118
+Research Methods and Biostatistics,Lab,SKIPPED Unparseable Start Time,Section D1,20260903,TBD,15:00,D1,Computer Lab 220
+Research Methods and Biostatistics,Lab,SKIPPED Missing End Time,Section D1,20260903,14:00,,D1,Computer Lab 220
+Research Methods and Biostatistics,Lab,SKIPPED Out Of Range Time,Section D2,20260903,25:70,26:00,D2,Computer Lab 220
+Thesis Supervision,Advising,Invalid Group Falls Back To Section,Section E1,20260904,09:00,10:00,ZZ9,Faculty Office 402
