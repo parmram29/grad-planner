@@ -1,3 +1,9 @@
+## Copyright
+
+Copyright (c) 2026 Parmanand Ramcharran. All rights reserved.
+
+This code is provided for viewing purposes only. No part of this project may be copied, modified, distributed, or used without written permission from the author.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ## Getting Started
